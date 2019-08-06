@@ -84,7 +84,7 @@ console.log(mike.age); //-> Logs 30
 mike.greet(); //-> Logs 'hello'
 
 /*** CHALLENGE 3 of 3 ***/
-personFromConstructor.prototype.introduce = function () {
+personFromConstructor.prototype.introduce = function() {
   console.log(`Hi my name is ${this.name}`);
 };
 
@@ -97,25 +97,31 @@ mike.introduce(); // -> Logs 'Hi, my name is Mike'
 /*** CHALLENGE 1 of 3 ***/
 
 class PersonClass {
-  constructor() {
-    // add code here
+  constructor(name) {
+    this.name = name;
   }
-
-  // add code here
+  greet = () => console.log("hello");
 }
 
 // /********* Uncomment this line to test your work! *********/
 var george = new PersonClass();
-// george.greet(); // -> Logs 'hello'
+george.greet(); // -> Logs 'hello'
 
-/*** CHALLENGE 2 of 3 ***/
+/*** CHALLENGE 2 of 2 ***/
 
-// add code here
+class DeveloperClass extends PersonClass {
+  constructor(name) {
+    super(name);
+  }
+  introduce = function() {
+    console.log("Hello World,my name is " + this.name);
+  };
+}
 
 // /********* Uncomment these lines to test your work! *********/
-// var thai = new DeveloperClass('Thai', 32);
-// console.log(thai.name); // -> Logs 'Thai'
-// thai.introduce(); //-> Logs 'Hello World, my name is Thai'
+var thai = new DeveloperClass("Thai", 32);
+console.log(thai.name); // -> Logs 'Thai'
+thai.introduce(); //-> Logs 'Hello World, my name is Thai'
 
 /****************************************************************
                       EXTENSION: SUBCLASSING
@@ -135,15 +141,22 @@ function userFactory(name, score) {
   return user;
 }
 
-var adminFunctionStore /* Put code here */;
+var adminFunctionStore = Object.create(userFunctionStore);
 
 function adminFactory(name, score) {
-  // Put code here
+  this.name = name;
+  this.score = score;
 }
+adminFactory.prototype = userFactory();
+adminFactory.prototype = adminFromFactory();
+adminFromFactory.type = "admin";
 
 /* Put code here for a method called sharePublicMessage*/
+adminFactory.sharePublicMessage = function() {
+  console.log("welcome user!");
+};
 
-var adminFromFactory = adminFactory("Eva", 5);
+var adminFromFactory = new adminFactory("Eva", 5);
 
 // /********* Uncomment these lines to test your work! *********/
 // adminFromFactory.sayType() // -> Logs "I am a Admin"
